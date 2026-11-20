@@ -1,0 +1,56 @@
+server:
+  address: 127.0.0.1
+  port: ${SERVER_PORT:58080}
+
+spring:
+  application:
+    name: kotlin-data-lab
+  config:
+    import: "optional:file:./.env[.properties]"
+  jackson:
+    deserialization:
+      fail-on-null-for-primitives: true
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:127.0.0.1}:${DB_PORT:55432}/${DB_NAME:kotlin_lab}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+    hikari:
+      connection-init-sql: SET search_path TO public
+      maximum-pool-size: 5
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.xml
+    default-schema: public
+    liquibase-schema: public
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        default_schema: public
+        format_sql: true
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:127.0.0.1:19092}
+    admin:
+      auto-create: ${LAB_KAFKA_ENABLED:false}
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+    consumer:
+      group-id: ${LAB_KAFKA_GROUP_ID:kotlin-lab-observer}
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    listener:
+      auto-startup: ${LAB_KAFKA_ENABLED:false}
+
+logging:
+  level:
+    org.hibernate.SQL: DEBUG
+
+lab:
+  remote:
+    base-url: ${LAB_REMOTE_BASE_URL:http://127.0.0.1:58080}
+  kafka:
+    enabled: ${LAB_KAFKA_ENABLED:false}
+    topic: ${LAB_KAFKA_TOPIC:local.T1.item-changed}

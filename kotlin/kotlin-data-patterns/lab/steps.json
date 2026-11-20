@@ -1,0 +1,114 @@
+{
+  "schemaVersion": 1,
+  "steps": [
+    {
+      "number": 0,
+      "title": "새 Gradle 프로젝트 만들기",
+      "files": [
+        "settings.gradle.kts",
+        "build.gradle.kts",
+        "gradlew",
+        "gradlew.bat",
+        "gradle/wrapper/gradle-wrapper.properties",
+        "gradle/wrapper/gradle-wrapper.jar",
+        ".gitignore"
+      ]
+    },
+    {
+      "number": 1,
+      "title": "DB 접속 설정과 앱 시작점 넣기",
+      "files": [
+        "compose.yaml",
+        ".env.example",
+        "src/main/resources/application.yml",
+        "src/main/resources/db/changelog/db.changelog-master.xml",
+        "src/main/resources/db/changelog/changes/001-create-tables.xml",
+        "src/main/kotlin/com/projectx/kotlinlab/KotlinLabApplication.kt",
+        "src/main/kotlin/com/projectx/kotlinlab/KotlinLabMain.kt",
+        "src/main/kotlin/com/projectx/kotlinlab/presentation/PingController.kt"
+      ]
+    },
+    {
+      "number": 2,
+      "title": "Entity와 DB 접근 코드 넣기",
+      "files": [
+        "src/main/kotlin/com/projectx/kotlinlab/domain/LabScope.kt",
+        "src/main/kotlin/com/projectx/kotlinlab/domain/LabError.kt",
+        "src/main/kotlin/com/projectx/kotlinlab/domain/LabException.kt",
+        "src/main/kotlin/com/projectx/kotlinlab/domain/Item.kt",
+        "src/main/kotlin/com/projectx/kotlinlab/infrastructure/config/QuerydslConfig.kt",
+        "src/main/kotlin/com/projectx/kotlinlab/infrastructure/repositories/ItemJpaRepository.kt",
+        "src/main/kotlin/com/projectx/kotlinlab/infrastructure/repositories/ItemRepository.kt"
+      ]
+    },
+    {
+      "number": 3,
+      "title": "조회 DTO와 GET 요청 연결하기",
+      "files": [
+        "src/main/kotlin/com/projectx/kotlinlab/application/queries/ItemView.kt",
+        "src/main/kotlin/com/projectx/kotlinlab/application/queries/ItemPage.kt",
+        "src/main/kotlin/com/projectx/kotlinlab/application/queries/ItemFilter.kt",
+        "src/main/kotlin/com/projectx/kotlinlab/infrastructure/queries/ItemQueries.kt",
+        "src/main/kotlin/com/projectx/kotlinlab/presentation/ApiError.kt",
+        "src/main/kotlin/com/projectx/kotlinlab/presentation/LabExceptionHandler.kt",
+        "src/main/kotlin/com/projectx/kotlinlab/presentation/ItemQueryController.kt"
+      ]
+    },
+    {
+      "number": 4,
+      "title": "생성·변경·커밋 코드 넣기",
+      "files": [
+        "src/main/kotlin/com/projectx/kotlinlab/application/commands/CreateItemCommand.kt",
+        "src/main/kotlin/com/projectx/kotlinlab/application/commands/RenameItemCommand.kt",
+        "src/main/kotlin/com/projectx/kotlinlab/application/events/ItemChangedEvent.kt",
+        "src/main/kotlin/com/projectx/kotlinlab/application/commands/CreateItemCommandHandler.kt",
+        "src/main/kotlin/com/projectx/kotlinlab/application/commands/RenameItemCommandHandler.kt",
+        "src/main/kotlin/com/projectx/kotlinlab/presentation/CreateItemRequest.kt",
+        "src/main/kotlin/com/projectx/kotlinlab/presentation/RenameItemRequest.kt",
+        "src/main/kotlin/com/projectx/kotlinlab/presentation/ItemCommandController.kt"
+      ]
+    },
+    {
+      "number": 5,
+      "title": "외부 HTTP 응답을 로컬 변경에 연결하기",
+      "files": [
+        "src/main/kotlin/com/projectx/kotlinlab/application/ports/RemoteItemSnapshot.kt",
+        "src/main/kotlin/com/projectx/kotlinlab/application/ports/RemoteItemPort.kt",
+        "src/main/kotlin/com/projectx/kotlinlab/infrastructure/proxies/RemoteItemResponse.kt",
+        "src/main/kotlin/com/projectx/kotlinlab/infrastructure/proxies/RemoteItemHttpProxy.kt",
+        "src/main/kotlin/com/projectx/kotlinlab/application/services/RefreshItemNameService.kt",
+        "src/main/kotlin/com/projectx/kotlinlab/presentation/RemoteItemView.kt",
+        "src/main/kotlin/com/projectx/kotlinlab/presentation/RemoteItemController.kt",
+        "src/main/kotlin/com/projectx/kotlinlab/presentation/RefreshItemNameRequest.kt",
+        "src/main/kotlin/com/projectx/kotlinlab/presentation/RemoteRefreshController.kt"
+      ]
+    },
+    {
+      "number": 6,
+      "title": "Kafka 발행과 수신값 관찰하기",
+      "files": [
+        "src/main/kotlin/com/projectx/kotlinlab/infrastructure/eventbus/ReceivedItemState.kt",
+        "src/main/kotlin/com/projectx/kotlinlab/infrastructure/eventbus/InMemoryReceivedItemStore.kt",
+        "src/main/kotlin/com/projectx/kotlinlab/infrastructure/eventbus/LabKafkaTopicConfiguration.kt",
+        "src/main/kotlin/com/projectx/kotlinlab/infrastructure/eventbus/ItemChangedKafkaPublisher.kt",
+        "src/main/kotlin/com/projectx/kotlinlab/infrastructure/eventbus/ItemChangedKafkaReceiver.kt",
+        "src/main/kotlin/com/projectx/kotlinlab/presentation/ReceivedEventsView.kt",
+        "src/main/kotlin/com/projectx/kotlinlab/presentation/EventObservationController.kt"
+      ]
+    },
+    {
+      "number": 7,
+      "title": "DB 없이 실행하는 단위 테스트 넣기",
+      "files": [
+        "src/test/kotlin/com/projectx/kotlinlab/domain/ItemTest.kt",
+        "src/test/kotlin/com/projectx/kotlinlab/application/queries/ItemFilterTest.kt",
+        "src/test/kotlin/com/projectx/kotlinlab/presentation/RenameItemRequestTest.kt",
+        "src/test/kotlin/com/projectx/kotlinlab/presentation/RefreshItemNameRequestTest.kt",
+        "src/test/kotlin/com/projectx/kotlinlab/infrastructure/proxies/RemoteItemMappingTest.kt",
+        "src/test/kotlin/com/projectx/kotlinlab/application/services/RefreshItemNameServiceTest.kt",
+        "src/test/kotlin/com/projectx/kotlinlab/infrastructure/eventbus/InMemoryReceivedItemStoreTest.kt",
+        "src/test/kotlin/com/projectx/kotlinlab/verification/LabHttpSmokeTest.kt"
+      ]
+    }
+  ]
+}
